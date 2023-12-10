@@ -19,6 +19,16 @@ public class BookingOrder implements IBengkelPayment{
 	private double totalServicePrice;
 	private double totalPayment;
 	
+	public BookingOrder(String bookingId,Customer customer,List<ItemService> services,String paymentMethod){
+		// super();
+		this.bookingId = bookingId;
+		this.customer = customer;
+		this.services = services;
+		this.paymentMethod = paymentMethod;
+		calculateTotalServicePrice();
+		calculatePayment();
+	} 
+
 	@Override
 	public void calculatePayment() {
 		double discount = 0;
@@ -31,5 +41,12 @@ public class BookingOrder implements IBengkelPayment{
 		setTotalPayment(getTotalServicePrice() - discount);
 	}
 
+	public void calculateTotalServicePrice(){
+		double total = 0;
+		for (ItemService itemService : services) {
+			total = total + itemService.getPrice();
+		}
+		setTotalServicePrice(total);
+	}
 	
 }
